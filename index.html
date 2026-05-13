@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>1Cell.Ai — Presentation Suite</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;1,8..60,400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #0a1340 0%, #1a2a60 40%, #3a2a00 100%);
+      font-family: 'Outfit', sans-serif;
+      color: #fff;
+    }
+
+    /* ── Header ── */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 28px 60px 24px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      backdrop-filter: blur(8px);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(10,19,64,0.72);
+    }
+    .header-logo { height: 44px; width: auto; }
+    .header-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.55);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    .deck-count {
+      font-size: 13px;
+      background: rgba(218,165,32,0.2);
+      color: #DAA520;
+      border: 1px solid rgba(218,165,32,0.35);
+      border-radius: 20px;
+      padding: 4px 14px;
+      font-weight: 700;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      text-align: center;
+      padding: 64px 60px 48px;
+    }
+    .hero h1 {
+      font-size: 52px;
+      font-weight: 800;
+      line-height: 1.15;
+      background: linear-gradient(135deg, #ffffff 0%, #DAA520 60%, #f0c040 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 14px;
+    }
+    .hero p {
+      font-family: 'Source Serif 4', serif;
+      font-size: 19px;
+      color: rgba(255,255,255,0.65);
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    /* ── Grid ── */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 24px;
+      padding: 0 60px 80px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    /* ── Card ── */
+    .card {
+      position: relative;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 18px;
+      padding: 28px 28px 24px;
+      cursor: pointer;
+      text-decoration: none;
+      display: block;
+      transition: transform 0.22s ease, background 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
+      overflow: hidden;
+    }
+    .card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 18px;
+      background: linear-gradient(135deg, rgba(218,165,32,0.08) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity 0.22s ease;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      background: rgba(255,255,255,0.10);
+      border-color: rgba(218,165,32,0.5);
+      box-shadow: 0 20px 48px rgba(0,0,0,0.45), 0 0 0 1px rgba(218,165,32,0.2);
+    }
+    .card:hover::before { opacity: 1; }
+
+    /* accent bar per card */
+    .card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      border-radius: 18px 18px 0 0;
+      background: var(--accent, #DAA520);
+      opacity: 0.7;
+      transition: opacity 0.22s ease;
+    }
+    .card:hover::after { opacity: 1; }
+
+    .card-num {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent, #DAA520);
+      margin-bottom: 10px;
+    }
+    .card-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.3;
+      margin-bottom: 10px;
+    }
+    .card-desc {
+      font-size: 14px;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.6;
+      font-family: 'Source Serif 4', serif;
+    }
+    .card-arrow {
+      position: absolute;
+      bottom: 22px;
+      right: 24px;
+      font-size: 18px;
+      color: var(--accent, #DAA520);
+      opacity: 0;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+    .card:hover .card-arrow {
+      opacity: 1;
+      transform: translateX(4px);
+    }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center;
+      padding: 32px 60px 48px;
+      font-size: 13px;
+      color: rgba(255,255,255,0.3);
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    footer strong { color: rgba(218,165,32,0.7); }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <img class="header-logo" src="../assets/inverse_logo.png" alt="1Cell.Ai" onerror="this.style.display='none'" />
+    <span class="header-title">Presentation Suite</span>
+    <span class="deck-count">11 Decks</span>
+  </header>
+
+  <section class="hero">
+    <h1>1Cell.Ai Knowledge Decks</h1>
+    <p>A curated library of slide presentations covering AI tools, agent workflows, token optimization, LLMs, and agentic development patterns.</p>
+  </section>
+
+  <main class="grid">
+
+    <a class="card" href="ai_tools.html" style="--accent:#2D7D9A;">
+      <div class="card-num">Deck 01</div>
+      <div class="card-title">AI Tools</div>
+      <div class="card-desc">A landscape of modern AI tooling — from coding assistants to multi-modal platforms shaping the agentic era.</div>
+      <span class="card-arrow">→</span>
+    </a>
+
+    <a class="card" href="markdown.html" style="--accent:#DAA520;">
+      <div class="card-num">Deck 02</div>
+      <div class="card-title">Markdown</div>
+      <div class="card-desc">Markdown as a power tool — syntax, structure, and why it matters for AI-native workflows and documentation.</div>
+      <span class="card-arrow">→</span>
+    </a>
+
+    <a class="card" href="diagramming_tools.html" style="--accent:#1A7F37;">
+      <div class="card-num">Deck 03</div>
+      <div class="card-title">Diagramming Tools</div>
+      <div class="card-desc">From Mermaid to Excalidraw — the best tools for visualising systems, architecture, and workflows alongside code.</div>
+      <span class="card-arrow">→</span>
+    </a>
+
+    <a class="card" href="intro_marp.html" style="--accent:#BE1E2D;">
+      <div class="card-num">Deck 04</div>
+      <div class="card-title">AI Mode vs Agent Mode</div>
+      <div class="card-desc">The fundamental shift from AI assistants to autonomous agents — and what it means for software development teams.</div>
+      <span class="card-arrow">→</span>
+    </a>
+
+    <a class="card" href="vibe_ide.html" style="--accent:#8250df;">
+      <div class="card-num">Deck 05</div>
+      <div class="card-title">Vibe IDE — AI Coding Agents Compared</div>
+      <div class="card-desc">A deep comparison of leading AI-native IDEs: Cursor, Windsurf, Cline, and more — features, trade-offs, and fit.</div>
+      <span class="card-arrow">→</span>
+    </a>
+
+    <a class="card" href="token_tools.html" style="--accent:#DAA520;">
+      <div class="card-num">Deck 06</div>
+      <div class="card-title">AI Token Optimization Tools</div>
+      <div class="card-desc">Strategies and tools for reducing token usage in agentic workflows — smarter context, lower cost, faster execution.</div>
+      <span class="card-arrow">→</span>
+    </a>
+
+    <a class="card" href="agents_skills_marp.html" style="--accent:#2D7D9A;">
+      <div class="card-num">Deck 07</div>
+      <div class="card-title">Agent Skills for Vibe Coding</div>
+      <div class="card-desc">How to build reusable skill files that give AI agents persistent, scoped knowledge of your project and workflows.</div>
+      <span class="card-arrow">→</span>
+    </a>
+
+    <a class="card" href="agent_code_marp.html" style="--accent:#BE1E2D;">
+      <div class="card-num">Deck 08</div>
+      <div class="card-title">Andrej Karpathy — Coding Agent Philosophy</div>
+      <div class="card-desc">Core principles from Karpathy's approach to LLM-native development: verification-driven coding and the agent mindset.</div>
+      <span class="card-arrow">→</span>
+    </a>
+
+    <a class="card" href="llm_wiki_marp.html" style="--accent:#1A7F37;">
+      <div class="card-num">Deck 09</div>
+      <div class="card-title">LLM Wiki — Personal Knowledge Base with AI</div>
+      <div class="card-desc">Building a living, LLM-maintained knowledge graph — including a spotlight on Graphify for AI coding assistants.</div>
+      <span class="card-arrow">→</span>
+    </a>
+
+    <a class="card" href="evolving_marp.html" style="--accent:#8250df;">
+      <div class="card-num">Deck 10</div>
+      <div class="card-title">Evolving AI Agents — What's Next</div>
+      <div class="card-desc">Emerging patterns in agentic AI — multi-agent orchestration, tool ecosystems, and where the field is heading.</div>
+      <span class="card-arrow">→</span>
+    </a>
+
+    <a class="card" href="printing_marp.html" style="--accent:#DAA520;">
+      <div class="card-num">Deck 11</div>
+      <div class="card-title">Printing Press — Agent-Friendly CLIs</div>
+      <div class="card-desc">Why CLIs beat APIs for agentic workflows — and how Printing Press helps you build focused, reusable agent tools.</div>
+      <span class="card-arrow">→</span>
+    </a>
+
+  </main>
+
+  <footer>
+    <strong>1Cell.Ai</strong> &nbsp;·&nbsp; Presentation Suite &nbsp;·&nbsp; www.1cell.ai
+  </footer>
+
+</body>
+</html>
